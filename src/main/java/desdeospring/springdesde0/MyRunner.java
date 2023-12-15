@@ -1,20 +1,18 @@
 package desdeospring.springdesde0;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import desdeospring.springdesde0.models.Alumno;
 import desdeospring.springdesde0.models.Asignatura;
+import desdeospring.springdesde0.models.Profesor;
 import desdeospring.springdesde0.repositorios.AlumnoRepositorio;
 import desdeospring.springdesde0.repositorios.AsignaturaRepositorio;
-import desdeospring.springdesde0.servicios.AlumnoServicio;
+import desdeospring.springdesde0.repositorios.ProfesorRepositorio;
+
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -23,17 +21,19 @@ public class MyRunner implements CommandLineRunner {
 
        private final AlumnoRepositorio als;
        private final AsignaturaRepositorio ags;
+       private final ProfesorRepositorio prr;
 
-      public MyRunner(AlumnoRepositorio als,AsignaturaRepositorio ags) {
+      public MyRunner(AlumnoRepositorio als,AsignaturaRepositorio ags,ProfesorRepositorio prr) {
         this.als=als;
         this.ags=ags;
+        this.prr=prr;
       }
 
     @Override
     public void run(String... args) throws Exception {
       
      Alumno pedro =new Alumno();
-		 pedro.setDniAlumno("17362522o");
+		 pedro.setDniAlumno("17362522p");
      pedro.setNombre("Pedro");
      pedro.setApellidos("Canelo Gomez");
      
@@ -41,7 +41,7 @@ public class MyRunner implements CommandLineRunner {
      
 
      Alumno antonio =new Alumno();
-		 antonio.setDniAlumno("11422613p");
+		 antonio.setDniAlumno("11422613L");
      antonio.setNombre("Antonio");
      antonio.setApellidos("Marquina Barrachina");
      
@@ -67,10 +67,72 @@ public class MyRunner implements CommandLineRunner {
       asignaturasp.add(religionp);
       pedro.setAsignaturas(asignaturasp);
       
+    /* 
+
       als.save(pedro);
       als.save(antonio);
 
-//ags.save(religion);
+     
+      
+     
+      
+      
+       Profesor andres=new Profesor();
+       andres.setName("Andres");
+       andres.addAlumno(antonio);
+       andres.addAlumno(pedro);
+
+      prr.save(andres);
+   
+*/
+     Profesor andres=new Profesor();
+       andres.setName("Andres");
+       andres.addAlumno(antonio);
+       andres.addAlumno(pedro);
+
+
+     Profesor mateo=new Profesor();
+     mateo.setName("Mateo");
+     mateo.addAlumno(antonio);
+     Profesor agustin=new Profesor();
+     agustin.setName("Agustin");
+     agustin.addAlumno(pedro);
+    
+    antonio.addProfesor(agustin);
+    antonio.addProfesor(mateo);
+    pedro.addProfesor(agustin);
+
+
+    
+  
+
+    prr.save(andres);
+    prr.save(mateo);
+    prr.save(agustin);
+
+
+     
+
+    
+     als.save(pedro);
+    als.save(antonio);
+
+
+    
+    
+    
+     
+   
+
+    
+
+    
+
+    
+    
+    
+   
+
 
     }
       

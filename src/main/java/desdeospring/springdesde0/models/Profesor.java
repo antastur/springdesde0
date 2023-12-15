@@ -1,10 +1,21 @@
 package desdeospring.springdesde0.models;
 
 import java.util.Set;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,53 +32,82 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="profesor")
-public class Profesor {
+public class Profesor implements Serializable {
 
     @Id
-    @Column(name="id")
+    @Column(name="idProf")
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idProf;
     
     @Column (name="nombre")
-    private String name;
+    private String nombre;
+    
+   
+    //@JsonBackReference
+    /*@JoinTable(name="rel_prof_alum",
+    joinColumns= @JoinColumn(name="profesor_id",referencedColumnName = "idProf"),
+    inverseJoinColumns= @JoinColumn(name="alumno_id",referencedColumnName = "idAlumno"))
+    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)  //cascade=CascadeType.MERGE */
+    @ManyToMany(mappedBy="profesores")
+    //@JsonIgnore
+    private List<Alumno> alumnos=new ArrayList<Alumno>();
 
-    @JoinTable(name="rel_prof_alum",
-    joinColumns= @JoinColumn(name="FK_PROF",nullable=false),
-    inverseJoinColumns= @JoinColumn(name="FK_AUTHOR",nullable=false))
-    @ManyToMany(cascade=CascadeType.ALL)
-    private Set<Alumno> alumnos;
 
     public Long getId() {
-        return id;
+        return idProf;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long idProf) {
+        this.idProf = idProf;
     }
 
     public String getName() {
-        return name;
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nombre) {
+        this.nombre = nombre;
     }
-
-    public Set<Alumno> getAlumnos() {
+    @JsonIgnore
+    public List<Alumno> getAlumnos() {
         return alumnos;
     }
 
-    public void setAlumnos(Set<Alumno> alumnos) {
+    public void setAlumnos(List<Alumno> alumnos) {
         this.alumnos = alumnos;
     }
 
+    public void addAlumno(Alumno alumno){
+        if(this.alumnos == null){
+            this.alumnos = new ArrayList<Alumno>();
+        }
+        
+        this.alumnos.add(alumno);
+    }
+/*
+    public void addAlumno(Alumno alumno){
+
+        if (this.alumnos==null){
+
+            this.alumnos=new HashSet<>();
+        }
+        this.alumnos.add(alumno);
+        
+    }
 
 
+ public void removeAlumno(Alumno alumno){
 
+        if (this.alumnos==null){
 
+            this.alumnos=new HashSet<>();
+        }
+        if(this.alumnos.contains(alumno))
+        this.alumnos.remove(alumno);
+        
+    }
 
-
-
+ */
 
     
 }

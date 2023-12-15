@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import desdeospring.springdesde0.models.Alumno;
 import desdeospring.springdesde0.models.Asignatura;
+import desdeospring.springdesde0.models.Profesor;
 import desdeospring.springdesde0.repositorios.AlumnoRepositorio;
 import desdeospring.springdesde0.repositorios.AsignaturaRepositorio;
+import desdeospring.springdesde0.repositorios.ProfesorRepositorio;
 
 
 @Service
@@ -20,9 +22,13 @@ public class AlumnoServicio {
 
     final AlumnoRepositorio alr;
     final AsignaturaRepositorio asr;
-    AlumnoServicio(AlumnoRepositorio alr,AsignaturaRepositorio asr) {
+    final ProfesorRepositorio prr;
+    
+    
+    AlumnoServicio(AlumnoRepositorio alr,AsignaturaRepositorio asr,ProfesorRepositorio prr) {
         this.alr = alr;
         this.asr=asr;
+        this.prr=prr;
     }
 
 
@@ -53,9 +59,10 @@ public Alumno  getAlumno(Long id){
 //Servicio para guardar un alumno
 public Alumno creaAlumno(@RequestBody Alumno alumno){
         
-
+        
         return this.alr.save(alumno);
         
+       
 
     }
 
@@ -69,12 +76,17 @@ public Alumno cambiarAlumno(Alumno request,Long id){
     al.setNombre(request.getNombre());
     al.setApellidos(request.getApellidos());
     Set<Asignatura> asignaturas =al.getAsignaturas();
+    List<Profesor> profesores= al.getProfesores();
     
     for (Asignatura asig : asignaturas){
         asr.delete(asig);
     }
+      for (Profesor prof : profesores){
+        prr.delete(prof);
+    }
 
     al.setAsignaturas(request.getAsignaturas());
+    al.setProfesores(request.getProfesores());
   Alumno updatedAl=this.alr.save(al);
     return updatedAl;
 }
@@ -97,7 +109,7 @@ public Boolean borrarAlumno(Long id){
 }
 
 
-
+//public List<Profesor> findProfesorbyidAlumno(Alumno)
 
 
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import desdeospring.springdesde0.models.Alumno;
 
 import desdeospring.springdesde0.servicios.AlumnoServicio;
+import desdeospring.springdesde0.servicios.ProfesorServicio;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,7 +26,7 @@ public class AlumnoController {
     private final AlumnoServicio als;
    
 
-     public AlumnoController(AlumnoServicio als) {
+     public AlumnoController(AlumnoServicio als,ProfesorServicio prs) {
         this.als = als;
     }
 

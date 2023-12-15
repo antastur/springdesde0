@@ -9,3 +9,4 @@ import desdeospring.springdesde0.models.Asignatura;
 public interface AsignaturaRepositorio extends JpaRepository<Asignatura,Long>{
 
 }
+ 

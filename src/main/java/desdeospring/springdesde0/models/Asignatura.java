@@ -1,7 +1,11 @@
 package desdeospring.springdesde0.models;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,36 +19,33 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="asignatura")
-public class Asignatura {
+public class Asignatura implements Serializable{
 
 
 
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     
     @Column(name="nombAsignatura")
     private String nombAsignatura;
     
     
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="alumno_id", nullable=false)
+    @JoinColumn(name="alumno_id",nullable=false)
+    //@JsonIgnore
     @JsonBackReference
     private Alumno alumno;
 
 
     
 
-
-
-
-    public long getId() {
+     public long getId() {
         return id;
     }
 

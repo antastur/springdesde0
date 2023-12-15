@@ -71,7 +71,7 @@ public Profesor cambiarProfesor(Profesor request,Long id){
     Profesor prof=this.profRep.findById(id).get();
     prof.setName(request.getName());//setDniAlumno(request.getDniAlumno());
     prof.setAlumnos(request.getAlumnos());
-    Set<Alumno> alumnos = prof.getAlumnos();
+    List<Alumno> alumnos = prof.getAlumnos();
     
     for (Alumno alum : alumnos){
         alumnoRep.delete(alum);

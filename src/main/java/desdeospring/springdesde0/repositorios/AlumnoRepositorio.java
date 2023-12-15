@@ -9,4 +9,5 @@ import desdeospring.springdesde0.models.Alumno;
 @Repository
 public interface AlumnoRepositorio  extends  JpaRepository<Alumno,Long> {
 
+   // List<Student> findByDni
 }
